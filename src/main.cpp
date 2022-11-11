@@ -61,7 +61,6 @@ static int Fitness(const t_chromosome_data& chromosome_data)
 static void Crossover(  const t_chromosome_data& parent1,
                         const t_chromosome_data& parent2,
                         t_chromosome_data& child1,
-                        t_chromosome_data& child2,
                         size_t crossover_point)
 {
     for (size_t i = 0; i < crossover_point; i++) {
@@ -69,8 +68,7 @@ static void Crossover(  const t_chromosome_data& parent1,
         //child2.at(i) = parent2.at(i);
     }
     for (size_t i = N_QUEENS - 1; i >= crossover_point; i--) {
-        //child1.at(i) = parent2.at(i);
-        child2.at(i) = parent1.at(i);
+        child1.at(i) = parent2.at(i);
     }
 }
 
@@ -137,8 +135,8 @@ int main()
         
         // Delete worst
         //std::cout << "Deleting worst chromosomes...";
-        for (size_t i = 0; i < N_CROSSOVER*2; i++) {
-            population.erase(population.end() - 1, population.end());
+        for (size_t i = 0; i < N_CROSSOVER; i++) {
+            population.erase(population.end());
         }
         //std::cout << "OK\n";
 
@@ -153,23 +151,19 @@ int main()
                 Mutate(p1.data);
             }
             t_chromosome c1;
-            t_chromosome c2;
             size_t crossover_point = distribution_crossover(rng);
             std::cout << "Crossover point: " << crossover_point << std::endl;
-            Crossover(p1.data, p2.data, c1.data, c2.data, crossover_point);
+            Crossover(p1.data, p2.data, c1.data, crossover_point);
 
             c1.fitness = Fitness(c1.data);
-            c2.fitness = Fitness(c2.data);
 
             std::cout << "P1: "; PrintChromosome(p1); std::cout << std::endl;
             std::cout << "P2: "; PrintChromosome(p2); std::cout << std::endl;
             std::cout << "C1: "; PrintChromosome(c1); std::cout << std::endl;
-            std::cout << "C2: "; PrintChromosome(c2); std::cout << std::endl;
             std::cout << "***************\n";
 
             population.push_back(c1);
-            population.push_back(c2);
-            if (c1.fitness == 0 || c2.fitness == 0) found = true;
+            if (c1.fitness == 0) found = true;
         }
         //std::cout << "OK\n";
 
