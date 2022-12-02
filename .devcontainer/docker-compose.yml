@@ -1,0 +1,24 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      #args: # ex: artifactory user/pass
+    command: sleep infinity
+    volumes:
+      - ~/dev/queens:/queens
+        #- ~/.gitconfig:~/.gitconfig
+        #grafana:
+        #  image: grafana/grafana
+        #  deploy:
+        #    restart_policy:
+        #      condition: on-failure
+        #      delay: 3s
+        #      max_attempts: 1
+        #      window: 20s
+        #  ports:
+        #    - "3000:3000"
+  grafana:
+    image: grafana/grafana-enterprise:8.2.0
+    ports:
+      - "3000:3000"
