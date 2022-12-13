@@ -10,7 +10,7 @@
 using t_chromosome_data = std::array<size_t, N_QUEENS>;
 
 std::mt19937 rng;
-std::uniform_int_distribution<size_t> distribution(0,7);
+std::uniform_int_distribution<size_t> distribution(0,N_QUEENS - 1);
 std::uniform_int_distribution<size_t> mutation(0, 50);
 
 
@@ -84,7 +84,7 @@ int main()
 {
     std::cout << "The n queens problem\n";
 
-    std::uniform_int_distribution<size_t> distribution(0,7);
+    std::uniform_int_distribution<size_t> distribution(0, N_QUEENS - 1);
     std::uniform_int_distribution<size_t> distribution_crossover(1,6);
     std::uniform_int_distribution<size_t> distribution_parent_pool(1, PARENT_POOL_SIZE);
 
