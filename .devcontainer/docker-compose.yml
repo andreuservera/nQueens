@@ -23,5 +23,4 @@ services:
     command: sleep infinity
     volumes:
       - ~/dev/queens:/queens
-      - ~/.gitconfig:/home/vscode/.gitconfig
     user: vscode
