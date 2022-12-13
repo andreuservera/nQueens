@@ -157,13 +157,14 @@ int main()
             }
 
             population.push_back(c1);
-            if (c1.fitness == 0) found = true;
+            if (c1.fitness == 0) {
+                found = true;
+                ChromosomePrinter(c1.data);
+            }
         }
     }
 
     std::cout << "Generations: " << generations << std::endl;
-    
-    ChromosomePrinter(population.front().data);
 
     return 0;
 }
