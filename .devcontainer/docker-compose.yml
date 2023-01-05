@@ -2,14 +2,6 @@ volumes:
   prometheus_data: {}
 
 services:
-  app:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    command: sleep infinity
-    volumes:
-      - ~/dev/queens:/queens
-
   prometheus:
     image: prom/prometheus:v2.40.5
     container_name: prometheus
@@ -18,10 +10,17 @@ services:
       - prometheus_data:/prometheus
     ports:
       - "9090:9090"
-
   grafana:
     image: grafana/grafana-enterprise:8.2.0
     ports:
       - "3000:3000"
     depends_on:
       - prometheus
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: sleep infinity
+    volumes:
+      - ~/repos/nQueens:/queens   # Modify accordingly
+    user: vscode

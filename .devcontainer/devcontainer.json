@@ -2,7 +2,7 @@
 	"name": "nQueens",
 	"workspaceFolder": "/queens",
 	"dockerComposeFile":["docker-compose.yml"],
-	"service": "app"
+	"service": "app",
 	//"build": {
 	//	"dockerfile": "Dockerfile"
 	//}
@@ -20,5 +20,5 @@
 	// "customizations": {},
 
 	// Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
-	// "remoteUser": "root"
+	"remoteUser": "vscode"
 }
