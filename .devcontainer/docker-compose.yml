@@ -22,5 +22,5 @@ services:
       dockerfile: Dockerfile
     command: sleep infinity
     volumes:
-      - ~/dev/queens:/queens
+      - ~/repos/nQueens:/queens   # Modify accordingly
     user: vscode
