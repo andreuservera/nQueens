@@ -3,21 +3,16 @@
 #include <vector>
 #include <random>
 
-#define POPULATION 10
-#define N_QUEENS 8 /* Solutions exists for N>3 */
-#define N_CROSSOVER 1
-#define PARENT_POOL_SIZE 4
+#include "config.h"
+#include "chromosome.h"
+#include "ChromosomePrinter.h"
 
 using t_chromosome_data = std::array<size_t, N_QUEENS>;
 
 std::mt19937 rng;
-std::uniform_int_distribution<size_t> distribution(0,7);
+std::uniform_int_distribution<size_t> distribution(0,N_QUEENS - 1);
 std::uniform_int_distribution<size_t> mutation(0, 50);
 
-struct t_chromosome {
-    t_chromosome_data data;
-    int fitness;
-};
 
 void PrintChromosome(const t_chromosome& chromosome)
 {
@@ -89,7 +84,7 @@ int main()
 {
     std::cout << "The n queens problem\n";
 
-    std::uniform_int_distribution<size_t> distribution(0,7);
+    std::uniform_int_distribution<size_t> distribution(0, N_QUEENS - 1);
     std::uniform_int_distribution<size_t> distribution_crossover(1,6);
     std::uniform_int_distribution<size_t> distribution_parent_pool(1, PARENT_POOL_SIZE);
 
@@ -162,11 +157,14 @@ int main()
             }
 
             population.push_back(c1);
-            if (c1.fitness == 0) found = true;
+            if (c1.fitness == 0) {
+                found = true;
+                ChromosomePrinter(c1.data);
+            }
         }
     }
 
     std::cout << "Generations: " << generations << std::endl;
-    
+
     return 0;
 }
