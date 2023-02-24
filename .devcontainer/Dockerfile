@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/devcontainers/cpp:0-ubuntu-22.04
+FROM mcr.microsoft.com/devcontainers/cpp:0-ubuntu-20.04
 
 ARG REINSTALL_CMAKE_VERSION_FROM_SOURCE="3.22.2"
 
@@ -15,6 +15,11 @@ RUN if [ "${REINSTALL_CMAKE_VERSION_FROM_SOURCE}" != "none" ]; then \
     fi \
     && rm -f /tmp/reinstall-cmake.sh
 
-RUN apt-get install -y git-flow
+RUN sudo apt-get -y update
+RUN sudo apt-get -y upgrade
+RUN sudo apt-get install -y git-flow
+RUN sudo apt-get install -y libmysqlcppconn-dev
+# Check if needed
+# RUN sudo apt-get install -y mysql-server
 
 USER $USERNAME

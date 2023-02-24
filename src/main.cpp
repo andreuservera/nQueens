@@ -1,11 +1,22 @@
-#include <iostream>
-#include <array>
-#include <vector>
-#include <random>
+/*
+ * Author: Andreu Servera 
+ */
+
+#include "mysql_connection.h"
+#include <cppconn/resultset.h>
+#include <cppconn/driver.h>
+#include <cppconn/exception.h>
+#include <cppconn/statement.h>
 
 #include "config.h"
 #include "chromosome.h"
 #include "ChromosomePrinter.h"
+
+#include <iostream>
+#include <array>
+#include <vector>
+#include <random>
+#include <stdio.h>
 
 using t_chromosome_data = std::array<size_t, N_QUEENS>;
 
@@ -13,6 +24,48 @@ std::mt19937 rng;
 std::uniform_int_distribution<size_t> distribution(0,N_QUEENS - 1);
 std::uniform_int_distribution<size_t> mutation(0, 50);
 
+static int InitDB()
+{
+    try
+    {
+        sql::Driver *driver;
+        sql::Connection *con;
+        sql::Statement *stmt;
+        sql::ResultSet *res;
+
+        /* Create a connection */
+        driver = get_driver_instance();
+        con = driver->connect("tcp://172.20.0.10:3306", "root", "root");
+        /* Connect to the MySQL test database */
+        con->setSchema("test");
+
+        stmt = con->createStatement();
+        res = stmt->executeQuery("SELECT PersonID, FirstName, LastName FROM Persons");
+        while (res->next())
+        {
+            std::cout << "\t... MySQL replies: " << std::endl;
+            std::cout << "\t\t Person Id: " << res->getInt("PersonID") << std::endl;
+            std::cout << "\t\t Person FirstName: " << res->getString("FirstName") << std::endl;
+            std::cout << "\t\t Person LastName: " << res->getString("LastName") << std::endl;
+        }
+        delete res;
+        delete stmt;
+        delete con;
+    }
+    catch (sql::SQLException &e)
+    {
+        std::cout << "# ERR: SQLException in " << __FILE__;
+        std::cout << "(" << __FUNCTION__ << ") on line " << __LINE__ << std::endl;
+        std::cout << "# ERR: " << e.what();
+        std::cout << " (MySQL error code: " << e.getErrorCode();
+        std::cout << ", SQLState: " << e.getSQLState() << " )" << std::endl;
+        return 1;
+    }
+
+    std::cout << std::endl;
+    
+    return 0;
+}
 
 void PrintChromosome(const t_chromosome& chromosome)
 {
@@ -83,6 +136,9 @@ bool sortFitness(t_chromosome c1, t_chromosome c2) {
 int main()
 {
     std::cout << "The n queens problem\n";
+    
+    std::cout << "Initialize DB...\n";
+    InitDB();
 
     std::uniform_int_distribution<size_t> distribution(0, N_QUEENS - 1);
     std::uniform_int_distribution<size_t> distribution_crossover(1,6);
@@ -126,7 +182,7 @@ int main()
     while (!found){
         generations++;
 
-        sort(population.begin(), population.end(), sortFitness);
+	std::sort(population.begin(), population.end(), sortFitness);
         
         // Delete worst
         for (size_t i = 0; i < N_CROSSOVER; i++) {
@@ -134,7 +190,7 @@ int main()
         }
 
         // Crossover
-        for (size_t i = 0; i < N_CROSSOVER*2; i=+2) {
+	for (size_t i = 0; i < N_CROSSOVER*2; i = i + 2) {
             int random_parent_1 = distribution_parent_pool(rng);
             int random_parent_2 = distribution_parent_pool(rng);
             t_chromosome p1 = population.at(random_parent_1);

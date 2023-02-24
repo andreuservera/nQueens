@@ -1,3 +1,7 @@
 build
 docker-compose.yml
 .gitconfig
+package-lock.json
+node_modules
+db/*
+.vscode

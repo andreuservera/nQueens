@@ -130,7 +130,7 @@
 	"editor.cursorBlinking": "blink",
 
 	// Controls whether the smooth caret animation should be enabled.
-	"editor.cursorSmoothCaretAnimation": false,
+	"editor.cursorSmoothCaretAnimation": "off",
 
 	// Controls the cursor style.
 	"editor.cursorStyle": "line",
@@ -280,10 +280,10 @@
 	"editor.foldingStrategy": "auto",
 
 	// Controls the font family.
-	"editor.fontFamily": "'Droid Sans Mono', 'monospace', monospace",
+	"editor.fontFamily": "JetBrainsMono NF",
 
 	// Configures font ligatures or font features. Can be either a boolean to enable/disable ligatures or a string for the value of the CSS 'font-feature-settings' property.
-	"editor.fontLigatures": false,
+	"editor.fontLigatures": true,
 
 	// Controls the font size in pixels.
 	"editor.fontSize": 14,
@@ -463,7 +463,7 @@
 	"editor.minimap.autohide": false,
 
 	// Controls whether the minimap is shown.
-	"editor.minimap.enabled": true,
+	"editor.minimap.enabled": false,
 
 	// Limit the width of the minimap to render at most a certain number of columns.
 	"editor.minimap.maxColumn": 120,
@@ -490,7 +490,7 @@
 	"editor.mouseWheelScrollSensitivity": 1,
 
 	// Zoom the font of the editor when using mouse wheel and holding `Ctrl`.
-	"editor.mouseWheelZoom": false,
+	"editor.mouseWheelZoom": true,
 
 	// Merge multiple cursors when they are overlapping.
 	"editor.multiCursorMergeOverlapping": true,
@@ -549,7 +549,7 @@
 	"editor.renderControlCharacters": true,
 
 	// Render last line number when the file ends with a newline.
-	"editor.renderFinalNewline": true,
+	"editor.renderFinalNewline": "on",
 
 	// Controls how the editor should render the current line highlight.
 	//  - none
@@ -3631,7 +3631,7 @@
 	"terminal.integrated.fastScrollSensitivity": 5,
 
 	// Controls the font family of the terminal. Defaults to `editor.fontFamily`'s value.
-	"terminal.integrated.fontFamily": "",
+	"terminal.integrated.fontFamily": "JetBrainsMono NF",
 
 	// Controls the font size in pixels of the terminal.
 	"terminal.integrated.fontSize": 14,
@@ -4499,7 +4499,9 @@
 	"task.autoDetect": "on",
 
 	// Configures whether to show the problem matcher prompt when running a task. Set to `true` to never prompt, or use a dictionary of task types to turn off prompting only for specific task types.
-	"task.problemMatchers.neverPrompt": false,
+	"task.problemMatchers.neverPrompt": {
+		"shell": true
+	},
 
 	// Controls whether to show the task detail for tasks that have a detail in task quick picks, such as Run Task.
 	"task.quickOpen.detail": true,
@@ -6143,5 +6145,8 @@
 
 	// Searches wrap around the end of the file.
 	"vim.wrapscan": true,
+	"[cpp]": {
+		"editor.defaultFormatter": "ms-vscode.cpptools"
+	},
 
 }
